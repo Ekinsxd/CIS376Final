@@ -2,9 +2,11 @@
 using System.Collections;
 //using UnityStandardAssets.ImageEffects;
 
-public enum GunStyles{
-	nonautomatic,automatic
+public enum GunStyles {
+	nonautomatic,
+	automatic
 }
+
 public class GunScript : MonoBehaviour {
 	[Tooltip("Selects type of waepon to shoot rapidly or one bullet per click.")]
 	public GunStyles currentStyle;
@@ -36,8 +38,6 @@ public class GunScript : MonoBehaviour {
 	 * Collection the variables upon awake that we need.
 	 */
 	void Awake(){
-
-
 		mls = GameObject.FindGameObjectWithTag("Player").GetComponent<MouseLookScript>();
 		player = mls.transform;
 		mainCamera = mls.myCamera;
@@ -53,8 +53,7 @@ public class GunScript : MonoBehaviour {
 		startRun = mouseSensitvity_running;
 
 		rotationLastY = mls.currentYRotation;
-		rotationLastX= mls.currentCameraXRotation;
-
+		rotationLastX = mls.currentCameraXRotation;
 	}
 
 
@@ -77,6 +76,7 @@ public class GunScript : MonoBehaviour {
 
 	private Vector2 gunFollowTimeVelocity;
 
+
 	/*
 	Update loop calling for methods that are descriped below where they are initiated.
 	*/
@@ -95,9 +95,8 @@ public class GunScript : MonoBehaviour {
 		Sprint(); //iff we have the gun you sprint from here, if we are gunless then its called from movement script
 
 		CrossHairExpansionWhenWalking();
-
-
 	}
+
 
 	/*
 	*Update loop calling for methods that are descriped below where they are initiated.
