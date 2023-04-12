@@ -241,6 +241,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8089720603534687274}
     m_Modifications:
+    - target: {fileID: 247149871900997132, guid: f4ad017fa08f71143b34fa304385c307,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
     - target: {fileID: 2124386367057621270, guid: f4ad017fa08f71143b34fa304385c307,
         type: 3}
       propertyPath: m_RootOrder
@@ -301,6 +306,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: -17.5
       objectReference: {fileID: 0}
+    - target: {fileID: 2963455013640950947, guid: f4ad017fa08f71143b34fa304385c307,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
     - target: {fileID: 4296305454785022873, guid: f4ad017fa08f71143b34fa304385c307,
         type: 3}
       propertyPath: m_Layer
@@ -311,6 +321,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: BoundingBox
       objectReference: {fileID: 0}
+    - target: {fileID: 5561918138989091679, guid: f4ad017fa08f71143b34fa304385c307,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+    - target: {fileID: 8400700925285379611, guid: f4ad017fa08f71143b34fa304385c307,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f4ad017fa08f71143b34fa304385c307, type: 3}
 --- !u!4 &1662279434445369560 stripped

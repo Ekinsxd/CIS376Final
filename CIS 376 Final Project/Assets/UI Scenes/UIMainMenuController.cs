@@ -19,7 +19,7 @@ public class UIMainMenuController : MonoBehaviour
 
     void StartButtonPressed()
     {
-        SceneManager.LoadScene("Playground");
+        SceneManager.LoadScene("MainScene");
     }
 
     // Update is called once per frame
