@@ -104,7 +104,7 @@ public class playerController : MonoBehaviour {
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
-        if (Input.GetKeyDown(shootKey) && elapsedTime > 1.0f) {
+        if (Input.GetKey(shootKey) && elapsedTime > 0.25f) {
             Instantiate(bullet, barrelEnd.transform.position, barrelEnd.transform.rotation);
             elapsedTime = 0;
         }
