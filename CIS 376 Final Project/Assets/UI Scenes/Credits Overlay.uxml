@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <ui:VisualElement style="height: 1179px; width: 1709px; max-height: 100%; max-width: 100%; background-color: rgba(0, 0, 0, 255);">
+        <ui:Label text="Developers:&#10;Ariana Sherrod-Cavanaugh&#10;Ethan Tran&#10;Romandy Vu&#10;&#10;Assets:&#10;EasyFPS&#10;IgniteCoders&#10;1000logos.net&#10;Handpainted_Grass_and_Ground_Textures" display-tooltip-when-elided="true" name="Label" style="justify-content: center; align-items: center; -unity-text-align: upper-center; color: rgba(255, 255, 255, 255); font-size: 48px;" />
+    </ui:VisualElement>
+</ui:UXML>
