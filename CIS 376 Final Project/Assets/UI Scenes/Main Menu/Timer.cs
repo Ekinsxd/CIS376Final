@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 public class Timer : MonoBehaviour
@@ -15,6 +16,8 @@ public class Timer : MonoBehaviour
     void Update()
     {
 
+        if (Input.anyKey && mainActive) { SceneManager.LoadScene(0); }
+
         currentTime += Time.deltaTime;
         if (currentTime >= 5)
         {
@@ -28,7 +31,6 @@ public class Timer : MonoBehaviour
                 ActivateCredits();
             }
         }
-
         if (Input.anyKey) { ActivateMainMenu(); }
 
     }

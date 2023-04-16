@@ -19,12 +19,13 @@ public class UIMainMenuController : MonoBehaviour
 
     void StartButtonPressed()
     {
+        Debug.Log("Start button pressed.");
         SceneManager.LoadScene("MainScene");
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 }

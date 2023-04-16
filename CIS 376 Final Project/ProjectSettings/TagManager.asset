@@ -8,6 +8,8 @@ TagManager:
   - SecondCamera
   - BulletSpawn
   - Bullet
+  - Weapon
+  - End Trigger
   layers:
   - Default
   - TransparentFX
