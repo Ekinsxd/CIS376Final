@@ -7,7 +7,7 @@ using TMPro;
 /// <summary>
 /// Player controller
 /// </summary>
-public class playerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
 
     #region Movement
     [Header("Movement")]
@@ -27,8 +27,8 @@ public class playerController : MonoBehaviour {
     public BulletController bulletPrefab;
     public GameObject barrelEnd;
     public GameObject gun;
-    public GameObject hCrossHair;
-    public GameObject vCrossHair;
+    [HideInInspector] public GameObject hCrossHair;
+    [HideInInspector] public GameObject vCrossHair;
     
     #endregion Bullets/Gun
 
@@ -61,14 +61,13 @@ public class playerController : MonoBehaviour {
     /// </summary>ww
     private void Start() {
         // normal gun to start
-        bulletType = BulletType.S;
+        bulletType = BulletType.Normal;
         //hCrossHair = Resources.Load("horizon_crosshir", typeof(GameObject)) as GameObject;
         //vCrossHair = Resources.Load("vertical_crosshir", typeof(GameObject)) as GameObject;
 
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
-
     }
 
 
@@ -81,7 +80,6 @@ public class playerController : MonoBehaviour {
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight, whatIsGround);
 
-        //Debug.Log("GROUNDED: " + grounded);
         MyInput();
         SpeedControl();
 
@@ -111,9 +109,7 @@ public class playerController : MonoBehaviour {
         // when to jump
         if (Input.GetKey(jumpKey) && readyToJump && grounded) {
             readyToJump = false;
-
             Jump();
-
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 

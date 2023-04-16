@@ -6,7 +6,8 @@ using UnityEngine;
 public class BulletController : MonoBehaviour {
     Rigidbody rb;
     float lifeTime = 0.0f;
-    public BulletType bulletType;
+
+    [HideInInspector] public BulletType bulletType;
 
 
     void Start() {
@@ -18,13 +19,13 @@ public class BulletController : MonoBehaviour {
     void Update() {
         // shoot bullet on first update
         if (lifeTime <= 0.0f) {
-            ShootBullet(bulletType);
+            ShootBullet();
         }
 
         lifeTime += Time.deltaTime;
-        //if (lifeTime > 2.0f) {
-        //    Destroy(gameObject);
-        //}
+        if (lifeTime > 2.0f) {
+            Destroy(gameObject);
+        }
     }
 
 
@@ -32,22 +33,28 @@ public class BulletController : MonoBehaviour {
     /// Shoot bullet using <see cref="bulletType"/>
     /// </summary>
     /// <param name="type"> <see cref="BulletType"/> to shoot (assigned by Player) </param>
-    private void ShootBullet(BulletType type) {
+    private void ShootBullet() {
+        float bulletSpeed = 75.0f;
+
         switch (bulletType) {
             case BulletType.Normal:
-            case BulletType.B:
             case BulletType.S:
-            case BulletType.M:
             case BulletType.R:
             case BulletType.F:
                 break;
+
+            case BulletType.M:
+                bulletSpeed = 200.0f;
+                break;
+
             default:
                 Debug.Log("unknown bullet type");
                 break;
         }
 
-        //Debug.Log(bulletType);
-        rb.AddForce(transform.forward * 75.0f, ForceMode.Impulse);
+        Debug.Log(bulletType);
+        Debug.Log(transform.forward * bulletSpeed);
+        rb.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
     }
 
 
