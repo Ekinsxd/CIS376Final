@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+//using BulletTypes;
 
 /// <summary>
 /// Player controller
 /// </summary>
-public class playerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
 
     #region Movement
     [Header("Movement")]
@@ -16,14 +17,20 @@ public class playerController : MonoBehaviour {
     public float jumpCooldown;
     public float airMultiplier;
     bool readyToJump;
-    
+
     #endregion Movement
 
-
-    /// <summary> Gun bullets </summary>
-    public GameObject bullet;
+    # region Bullets/Gun
+    [Header("Bullets/Gun")]
+    
+    public BulletType bulletType;
+    public BulletController bulletPrefab;
     public GameObject barrelEnd;
     public GameObject gun;
+    public GameObject hCrossHair;
+    public GameObject vCrossHair;
+    
+    #endregion Bullets/Gun
 
     [HideInInspector] public float walkSpeed;
     [HideInInspector] public float sprintSpeed;
@@ -51,12 +58,17 @@ public class playerController : MonoBehaviour {
 
     /// <summary>
     /// 
-    /// </summary>
+    /// </summary>ww
     private void Start() {
+        // normal gun to start
+        bulletType = BulletType.S;
+        //hCrossHair = Resources.Load("horizon_crosshir", typeof(GameObject)) as GameObject;
+        //vCrossHair = Resources.Load("vertical_crosshir", typeof(GameObject)) as GameObject;
+
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
-        bullet = Resources.Load("Bullet", typeof(GameObject)) as GameObject;
         readyToJump = true;
+
     }
 
 
@@ -67,8 +79,9 @@ public class playerController : MonoBehaviour {
         elapsedTime += Time.deltaTime;
 
         // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
-        //Debug.Log("Grounded: " + grounded + "");
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight, whatIsGround);
+
+        //Debug.Log("GROUNDED: " + grounded);
         MyInput();
         SpeedControl();
 
@@ -105,7 +118,8 @@ public class playerController : MonoBehaviour {
         }
 
         if (Input.GetKey(shootKey) && elapsedTime > 0.25f) {
-            Instantiate(bullet, barrelEnd.transform.position, barrelEnd.transform.rotation);
+            BulletController bullet = Instantiate(bulletPrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
+            bullet.bulletType = this.bulletType;
             elapsedTime = 0;
         }
     }
@@ -120,7 +134,7 @@ public class playerController : MonoBehaviour {
 
         // on ground
         if (grounded) {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Force);
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Acceleration);
         }
 
         // in air
@@ -161,4 +175,47 @@ public class playerController : MonoBehaviour {
     private void ResetJump() {
         readyToJump = true;
     }
+
+
+    #region Events
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerEnter(Collider other) {
+        Debug.Log($"{this.name} hit {other.name}!");
+
+        int powerUp = 6;
+        switch (other.name) {
+            case "Normal":
+                powerUp = 0;
+                break;
+            case "B":
+                powerUp = 1;
+                break;
+            case "S":
+                powerUp = 2;
+                break;
+            case "M":
+                powerUp = 3;
+                break;
+            case "R":
+                powerUp = 4;
+                break;
+            case "F":
+                powerUp = 5;
+                break;
+            default:
+                Debug.Log("unknown bullet type");
+                break;
+        }
+
+        if (bulletType == ((BulletType)powerUp)) {
+            Debug.Log($"BULLET TYPE: {bulletType} POWERUP: {powerUp}");
+        }
+
+    }
+
+    #endregion Events
 }
