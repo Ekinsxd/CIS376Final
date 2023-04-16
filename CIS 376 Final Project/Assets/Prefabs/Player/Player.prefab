@@ -1328,6 +1328,11 @@ PrefabInstance:
       propertyPath: orientation
       value: 
       objectReference: {fileID: 8116633544908135616}
+    - target: {fileID: 2129182911889260429, guid: c6c2cf635ac3e0d46b276eb345cebf7b,
+        type: 3}
+      propertyPath: field of view
+      value: 90
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c6c2cf635ac3e0d46b276eb345cebf7b, type: 3}
 --- !u!1 &8116633545154653527 stripped
