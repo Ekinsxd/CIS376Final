@@ -7,7 +7,7 @@ using TMPro;
 /// <summary>
 /// Player controller
 /// </summary>
-public class PlayerController : MonoBehaviour {
+public class playerController : MonoBehaviour {
 
     #region Movement
     [Header("Movement")]

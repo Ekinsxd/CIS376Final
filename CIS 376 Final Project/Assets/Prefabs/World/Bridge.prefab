@@ -397,6 +397,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6951871406396286781}
+  - component: {fileID: 8654510292599397451}
   m_Layer: 9
   m_Name: Bridge
   m_TagString: Untagged
@@ -429,6 +430,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8654510292599397451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3669787838896041874}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc212f0c23258d9479b7e01794549328, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosion: {fileID: 9006915606054590096, guid: efc99a214e7b57d4d9f36ae9bb15b36e,
+    type: 3}
 --- !u!1 &3879396965699288856
 GameObject:
   m_ObjectHideFlags: 0
