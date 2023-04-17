@@ -8,6 +8,7 @@ public class EnemyRunnerBehavior : MonoBehaviour {
     Vector3 destination;
     NavMeshAgent agent;
     public int health = 2;
+    public AudioClip hitSound;
     // Start is called before the first frame update
     void Start() {
         agent = GetComponent<NavMeshAgent>();
@@ -26,8 +27,14 @@ public class EnemyRunnerBehavior : MonoBehaviour {
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Bullet") { TakeDamage();}
+    }
+
     private void TakeDamage() {
-        Debug.Log(health);
+        Debug.Log("Enemy Health left:" +  health);
+        AudioSource.PlayClipAtPoint(hitSound, target.position);
         health--;
         if (health <= 0) { Destroy(gameObject); }
     }

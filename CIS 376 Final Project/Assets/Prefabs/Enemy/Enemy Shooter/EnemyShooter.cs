@@ -15,13 +15,14 @@ public class EnemyShooter : MonoBehaviour {
     private Transform location;
     //location of enemy
     private Transform enemyLocation;
+    public AudioClip hitSound, shootSound, dieSound;
 
     // Start is called before the first frame update
     void Start() {
         agent = GetComponent<NavMeshAgent>();
         destination = agent.destination;
         target = GameObject.Find("Player").transform;
-        location = GameObject.Find("Enemy Bullet Spawn").transform;
+        location = transform.GetChild(0).gameObject.transform;
         enemyLocation = GetComponent<Transform>();
         //projectile = Resources.Load("Bullet", typeof(GameObject)) as GameObject;
 
@@ -46,10 +47,20 @@ public class EnemyShooter : MonoBehaviour {
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+        {
+        if (other.gameObject.tag == "Bullet")
+        {
+            TakeDamage();
+        }
+
+    }
+
     private void TakeDamage() {
         //Debug.Log(health);
         health--;
-        if (health <= 0) { Destroy(gameObject); }
+        if (health <= 0) { AudioSource.PlayClipAtPoint(dieSound, target.position); Destroy(gameObject);}
+        else { AudioSource.PlayClipAtPoint(hitSound, target.position); }
     }
 
     private void FireProjectile() {
@@ -58,6 +69,7 @@ public class EnemyShooter : MonoBehaviour {
         transform.LookAt(target.position);
         if (elapsedTime >= fireDelay) {
             elapsedTime = 0;
+            AudioSource.PlayClipAtPoint(shootSound, target.position);
             Instantiate(projectile, location.position, location.rotation);
         }
     }

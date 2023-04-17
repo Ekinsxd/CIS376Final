@@ -132,6 +132,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   health: 2
+  hitSound: {fileID: 8300000, guid: af76bff4a506f4c4f9363b06c49f7ba7, type: 3}
 --- !u!195 &1515841483486723314
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -235,20 +236,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1515841483844359154}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &1515841483919420448
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1857787750495104675}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 4
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 1022625529149906712, guid: 7e09137b57056ab41a8db705fe4874ae, type: 3}
 --- !u!33 &1515841483919420450
 MeshFilter:
   m_ObjectHideFlags: 0
