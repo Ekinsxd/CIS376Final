@@ -37,23 +37,20 @@ public class BulletController : MonoBehaviour {
         float bulletSpeed = 75.0f;
 
         switch (bulletType) {
+            case BulletType.M:
+                bulletSpeed = 200.0f;
+                break;
+
             case BulletType.Normal:
             case BulletType.S:
             case BulletType.R:
             case BulletType.F:
                 break;
 
-            case BulletType.M:
-                bulletSpeed = 200.0f;
-                break;
-
-            default:
-                Debug.Log("unknown bullet type");
-                break;
         }
 
-        Debug.Log(bulletType);
-        Debug.Log(transform.forward * bulletSpeed);
+        //Debug.Log(bulletType);
+        //Debug.Log(transform.forward * bulletSpeed);
         rb.AddForce(transform.forward * bulletSpeed, ForceMode.Impulse);
     }
 

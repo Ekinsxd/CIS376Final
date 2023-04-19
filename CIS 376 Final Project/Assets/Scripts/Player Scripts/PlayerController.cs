@@ -7,7 +7,7 @@ using TMPro;
 /// <summary>
 /// Player controller
 /// </summary>
-public class playerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour {
 
     #region Movement
     [Header("Movement")]
@@ -36,8 +36,8 @@ public class playerController : MonoBehaviour {
     [HideInInspector] public float sprintSpeed;
 
     [Header("Keybinds")]
-    public KeyCode jumpKey = KeyCode.Space;
-    public KeyCode shootKey = KeyCode.F;
+    public KeyCode jumpKey;
+    public KeyCode shootKey;
 
     [Header("Ground Check")]
     public float playerHeight;
