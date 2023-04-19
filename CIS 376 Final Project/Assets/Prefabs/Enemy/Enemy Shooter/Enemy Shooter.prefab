@@ -119,7 +119,7 @@ MonoBehaviour:
   health: 1
   projectile: {fileID: 3540754803236918160, guid: 32c97803777fcb94a9bd3b0f2b224f4f,
     type: 3}
-  fireDelay: 1
+  fireDelay: 2
   hitSound: {fileID: 8300000, guid: af76bff4a506f4c4f9363b06c49f7ba7, type: 3}
   shootSound: {fileID: 8300000, guid: 04fab22cb4ae41547ab63d887f9378df, type: 3}
   dieSound: {fileID: 8300000, guid: 620d696cb7743b143ba167be097d1a53, type: 3}
