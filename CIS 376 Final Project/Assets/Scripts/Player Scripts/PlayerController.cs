@@ -55,6 +55,8 @@ public class PlayerController : MonoBehaviour {
 
     protected float elapsedTime = 0;
 
+    GameController gc;
+
 
     /// <summary>
     /// 
@@ -64,7 +66,7 @@ public class PlayerController : MonoBehaviour {
         bulletType = BulletType.Normal;
         //hCrossHair = Resources.Load("horizon_crosshir", typeof(GameObject)) as GameObject;
         //vCrossHair = Resources.Load("vertical_crosshir", typeof(GameObject)) as GameObject;
-
+        gc = GameObject.FindWithTag("GameController").GetComponent<GameController>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
@@ -180,7 +182,12 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other) {
-        Debug.Log($"{this.name} hit {other.name}!");
+        // Debug.Log($"{this.name} hit {other.name}!");
+
+        if (other.tag == "Bullet")
+        {
+            gc.LoseLife();
+        }
 
         int powerUp = 6;
         switch (other.name) {
@@ -203,12 +210,12 @@ public class PlayerController : MonoBehaviour {
                 powerUp = 5;
                 break;
             default:
-                Debug.Log("unknown bullet type");
+                // Debug.Log("unknown bullet type");
                 break;
         }
 
         if (bulletType == ((BulletType)powerUp)) {
-            Debug.Log($"BULLET TYPE: {bulletType} POWERUP: {powerUp}");
+            // Debug.Log($"BULLET TYPE: {bulletType} POWERUP: {powerUp}");
         }
 
     }

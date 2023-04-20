@@ -14,6 +14,9 @@ TagManager:
   - F
   - R
   - S
+  - UI
+  - GameOver
+  - Life
   layers:
   - Default
   - TransparentFX
@@ -28,8 +31,8 @@ TagManager:
   - Player
   - Wall
   - Bullet
-  - 
-  - 
+  - Turret
+  - Enemy
   - 
   - 
   - 
