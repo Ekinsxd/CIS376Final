@@ -12,6 +12,7 @@ public class TurretController : MonoBehaviour
     private Transform myLocation;
     private Transform barrel1, barrel2, turretBody;
     public AudioClip hitSound, shootSound, dieSound;
+    public float range = 20f;
 
 
     // Start is called before the first frame update
@@ -30,7 +31,7 @@ public class TurretController : MonoBehaviour
     {
         float distance = Vector3.Distance(myLocation.position, target.position);
         if (health <= 0) { return; }
-        if (distance <= 20f) { FireProjectile(); }
+        if (distance <= range) { FireProjectile(); }
         elapsedTime += Time.deltaTime;
     }
 
