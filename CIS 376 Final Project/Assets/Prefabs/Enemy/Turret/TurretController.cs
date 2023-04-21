@@ -65,4 +65,13 @@ public class TurretController : MonoBehaviour
         if (other.gameObject.tag == "Bullet")
         { TakeDamage(); }
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (health <= 0) { return; }
+        if (collision.gameObject.tag == "Bullet")
+        { TakeDamage(); }
+
+    }
+
 }
