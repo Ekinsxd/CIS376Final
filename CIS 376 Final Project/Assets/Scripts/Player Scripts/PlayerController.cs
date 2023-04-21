@@ -24,7 +24,7 @@ public class PlayerController : MonoBehaviour {
     [Header("Bullets/Gun")]
 
     public Powerup currentPowerup;
-    public BulletController bulletPrefab;
+    public GameObject bulletPrefab;
     public GameObject barrelEnd;
     public GameObject gun;
 
@@ -55,12 +55,14 @@ public class PlayerController : MonoBehaviour {
 
     GameController gc;
 
+    private float shotCooldown = 0.5f;
+    private bool readyToShoot = true;
 
     /// <summary>
     /// First call upon player creation
     /// </summary>
     private void Start() {
-        currentPowerup = Powerup.None;
+        currentPowerup = Powerup.F;
         gc = GameObject.FindWithTag("GameController").GetComponent<GameController>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -110,7 +112,7 @@ public class PlayerController : MonoBehaviour {
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
-        if (Input.GetKey(shootKey) && elapsedTime > 0.25f) {
+        if (Input.GetMouseButton(0) && elapsedTime > 0.25f) {
             ShootWeapon();
         }
     }
@@ -181,30 +183,71 @@ public class PlayerController : MonoBehaviour {
     private void ShootWeapon() {
         switch (currentPowerup) {
             case Powerup.S:
-                ShootSBullet();
+                if (readyToShoot) {
+                    ShootSBullet();
+                }
                 break;
 
             case Powerup.M:
-                ShootMBullet();
+                if (readyToShoot) {
+                    ShootMBullet();
+                }
                 break;
 
-            case Powerup.R:
             case Powerup.F:
+                if (readyToShoot) {
+                    ShootFBullet();
+                }
+                break;
+
+            case Powerup.R: // ???
             case Powerup.None:
             default:
-                BulletController bullet = Instantiate(bulletPrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
-                elapsedTime = 0;
+                if (readyToShoot) {
+                    GameObject bullet = Instantiate(bulletPrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
+                    elapsedTime = 0;
+                }
                 break;
         }
 
+        readyToShoot = false;
+        Invoke(nameof(ResetShoot), shotCooldown);
     }
 
 
     /// <summary>
     /// 
     /// </summary>
-    private void ShootMBullet() {
+    private void ShootFBullet() {
+        //GameObject bullet = Instantiate(bulletPrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
+        //Transform center = bullet.transform.parent;
 
+        ////// offset from center
+        //Vector3 fPos = bullet.transform.localPosition;
+        //fPos.x += bullet.transform.localScale.x;
+        //bullet.transform.localPosition = fPos;
+
+        //Debug.Log(bullet.transform.localPosition);
+        //// rotate around center
+        //bullet.transform.RotateAround(center.position, Vector3.right, 20 * Time.deltaTime);
+
+    }
+
+
+    /// <summary>
+    /// Shoot machine gun
+    /// Shoots 5 bullets at once
+    /// </summary>
+    private void ShootMBullet() {
+        float fireDelay = 1.0f;
+        float autoTimer = 0.0f;
+        for (int i = 0; i < 5; i++) {
+            autoTimer -= Time.deltaTime;
+            if (autoTimer <= 0) {
+                Instantiate(bulletPrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
+                autoTimer += fireDelay;
+            }
+        }
     }
 
 
@@ -213,27 +256,41 @@ public class PlayerController : MonoBehaviour {
     /// Shoots multiple bullets at once
     /// </summary>
     private void ShootSBullet() {
-        float spreadAngle = 2.0f;       // Angle between shots
-        float timeBetweenShots = 0.5f;  // Minimum time between shots
-        float nextShot = 0.0f;
+        float numBullets = 5.0f; // per axis (5 horizontal, 5 vertical)
+        float spreadAngle = 2.0f; // angle between bullets
+        float startAngle = -(numBullets * spreadAngle) / 2.0f; // start at half of total spread (negative)
 
-        nextShot = Time.time + timeBetweenShots;
-        var hAngle = Quaternion.AngleAxis(-2.5f * spreadAngle, transform.up) * transform.rotation;
-        var hDelta = Quaternion.AngleAxis(spreadAngle, transform.up);
+        // Creates a rotation which rotates startAngle degrees around y-axis.
+        Quaternion hAngle = Quaternion.AngleAxis(startAngle, orientation.up) * barrelEnd.transform.rotation;
+        Quaternion hDelta = Quaternion.AngleAxis(spreadAngle, orientation.up);
 
-        var vAngle = Quaternion.AngleAxis(-2.5f * spreadAngle, transform.right) * transform.rotation;
-        var vDelta = Quaternion.AngleAxis(spreadAngle, transform.right);
+        // Creates a rotation which rotates startAngle degrees around x-axis.
+        Quaternion vAngle = Quaternion.AngleAxis(startAngle, orientation.right) * barrelEnd.transform.rotation;
+        Quaternion vDelta = Quaternion.AngleAxis(spreadAngle, orientation.right);
 
-        for (var i = 0; i < 10; i++) {
-            if (i < 5) {
+        for (var i = 0; i < (numBullets * 2); i++) {
+            if (i < 5) { // horizontal spread
                 Instantiate(bulletPrefab, barrelEnd.transform.position, hAngle);
-                hAngle = hDelta * hAngle;
+                hAngle = hDelta * hAngle; // rotate
+
             } else {
-                Instantiate(bulletPrefab, barrelEnd.transform.position, vAngle);
-                vAngle = vDelta * vAngle;
+                // vertical spread
+                if (i != 8) { // share middle bullet
+                    Instantiate(bulletPrefab, barrelEnd.transform.position, vAngle);
+                }
+                vAngle = vDelta * vAngle; // rotate
             }
         }
     }
+
+
+    /// <summary>
+    /// Set ready to shoot
+    /// </summary>
+    private void ResetShoot() {
+        readyToShoot = true;
+    }
+
 
     #endregion WEAPON
 
@@ -248,6 +305,8 @@ public class PlayerController : MonoBehaviour {
         int enemyLayer = LayerMask.NameToLayer("Enemy");
         if (other.tag == "Bullet" && other.gameObject.layer == enemyLayer) {
             gc.LoseLife();
+            Debug.Log($"PLAYER SHOT BY ENEMY");
+
         }
 
         // powerup
@@ -271,9 +330,9 @@ public class PlayerController : MonoBehaviour {
                     break;
             }
 
-            Debug.Log(((Powerup)powerUp));
             if (powerUp > 0 && ((Powerup)powerUp) != currentPowerup) {
                 currentPowerup = ((Powerup)powerUp);
+                Debug.Log($"REACHED POWERUP: {currentPowerup}");
             }
         }
     }

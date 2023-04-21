@@ -17,6 +17,7 @@ TagManager:
   - UI
   - GameOver
   - Life
+  - Spawner
   layers:
   - Default
   - TransparentFX

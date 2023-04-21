@@ -7,6 +7,7 @@ public class BulletController : MonoBehaviour {
     Rigidbody rb;
     float lifeTime = 0.0f;
 
+
     void Start() {
         rb = GetComponent<Rigidbody>();
     }
@@ -16,7 +17,7 @@ public class BulletController : MonoBehaviour {
     void Update() {
         // shoot bullet on first update
         if (lifeTime <= 0.0f) {
-            rb.AddForce(transform.forward * 75.0f, ForceMode.Impulse);
+            rb.AddForce(transform.forward * 25.0f, ForceMode.Impulse);
         }
 
         lifeTime += Time.deltaTime;
@@ -31,7 +32,7 @@ public class BulletController : MonoBehaviour {
     /// </summary>
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other) {
-        if (other.tag != "Bullet")
+        if (other.tag != "Bullet" && other.tag != "Spawner")
             Destroy(gameObject);
     }
 }

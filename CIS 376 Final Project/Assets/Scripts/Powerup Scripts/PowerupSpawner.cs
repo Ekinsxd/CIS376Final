@@ -7,7 +7,7 @@ public class PowerupSpawner : MonoBehaviour {
     /// <summary>
     /// Powerup Prefabs
     /// </summary>
-    public PowerupScript[] powerups = new PowerupScript[4];
+    public GameObject[] powerups = new GameObject[4];
 
 
     /// <summary>
@@ -15,7 +15,7 @@ public class PowerupSpawner : MonoBehaviour {
     /// spawned
     /// Index should correspond with <see cref="powerups"/> index
     /// </summary>
-    private bool[] spawnedPowerups = new bool[4];
+    private bool[] spawnedPowerups = { false, false, false, false };
 
 
     /// <summary>
@@ -54,7 +54,7 @@ public class PowerupSpawner : MonoBehaviour {
     /// <param name="player"></param>
     void SpawnRandomPowerup(Transform player) {
         int powerupType = Random.Range(0, 4);
-        PowerupScript powerup = powerups[powerupType];
+        GameObject powerup = powerups[powerupType];
         
         // TODO: reset spawnedPowerups once all are true
         // ensures that we don't spawn the same powerup twice
