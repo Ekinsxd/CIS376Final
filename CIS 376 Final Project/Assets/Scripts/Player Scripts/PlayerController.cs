@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-//using BulletTypes;
 
 /// <summary>
 /// Player controller
@@ -10,63 +9,53 @@ using TMPro;
 public class PlayerController : MonoBehaviour {
 
     #region Movement
-    [Header("Movement")]
-    public float moveSpeed;
-    public float groundDrag;
-    public float jumpForce;
-    public float jumpCooldown;
-    public float airMultiplier;
-    bool readyToJump;
+    private const float playerHeight = 4;
+    private const float moveSpeed = 8;
+    private const float groundDrag = 4;
+    private const float jumpForce = 175;
+    private const float jumpCooldown = 1;
+    private const float airMultiplier = 0.4f;
 
-    #endregion Movement
+    private float horizontalInput;
+    private float verticalInput;
 
-    # region Bullets/Gun
-    [Header("Bullets/Gun")]
-
-    public Powerup currentPowerup;
-    public GameObject bulletPrefab;
-    public GameObject barrelEnd;
-    public GameObject gun;
-
-    #endregion Bullets/Gun
-
-    [HideInInspector] public float walkSpeed;
-    [HideInInspector] public float sprintSpeed;
-
-    [Header("Keybinds")]
-    public KeyCode jumpKey;
-    public KeyCode shootKey;
-
-    [Header("Ground Check")]
-    public float playerHeight;
-    public LayerMask whatIsGround;
-    bool grounded;
+    private bool readyToJump;
 
     public Transform orientation;
+    private Vector3 moveDirection;
+    private Rigidbody rb;
+    #endregion Movement
 
-    float horizontalInput;
-    float verticalInput;
+    #region Powerups/Bullets
 
-    Vector3 moveDirection;
+    [Header("Powerups/Bullets")]
+    public GameObject bulletPrefab;
+    public GameObject barrelEnd;
 
-    Rigidbody rb;
+    private Powerup currentPowerup;
+    private bool readyToShoot;
 
-    protected float elapsedTime = 0;
+    #endregion Powerups/Bullets
 
-    GameController gc;
+    [Header("Ground/Water Check")]
+    public LayerMask groundLayer;
+    public LayerMask waterLayer;
+    private bool grounded;
+    private bool inWater;
 
-    private float shotCooldown = 0.5f;
-    private bool readyToShoot = true;
+    private GameController gc;
+    private const KeyCode jumpKey = KeyCode.Space;
 
     /// <summary>
     /// First call upon player creation
     /// </summary>
     private void Start() {
-        currentPowerup = Powerup.F;
+        currentPowerup = Powerup.M;
         gc = GameObject.FindWithTag("GameController").GetComponent<GameController>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
         readyToJump = true;
+        readyToShoot = true;
     }
 
 
@@ -74,10 +63,8 @@ public class PlayerController : MonoBehaviour {
     /// Update player game object
     /// </summary>
     private void Update() {
-        elapsedTime += Time.deltaTime;
-
         // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight, whatIsGround);
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight, groundLayer);
 
         MyInput();
         SpeedControl();
@@ -105,15 +92,20 @@ public class PlayerController : MonoBehaviour {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
+        inWater = Physics.Raycast(transform.position, Vector3.down, playerHeight, waterLayer);
+
         // when to jump
-        if (Input.GetKey(jumpKey) && readyToJump && grounded) {
+        if (Input.GetKey(jumpKey) && readyToJump && grounded && !inWater) {
             readyToJump = false;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
-        if (Input.GetMouseButton(0) && elapsedTime > 0.25f) {
+        // shoot weapon
+        if (Input.GetMouseButton(0) && readyToShoot) {
+            readyToShoot = false;
             ShootWeapon();
+            Invoke(nameof(ResetShoot), GetShotCooldown());
         }
     }
 
@@ -183,35 +175,20 @@ public class PlayerController : MonoBehaviour {
     private void ShootWeapon() {
         switch (currentPowerup) {
             case Powerup.S:
-                if (readyToShoot) {
-                    ShootSBullet();
-                }
-                break;
-
-            case Powerup.M:
-                if (readyToShoot) {
-                    ShootMBullet();
-                }
+                ShootSBullet();
                 break;
 
             case Powerup.F:
-                if (readyToShoot) {
-                    ShootFBullet();
-                }
+                ShootFBullet();
                 break;
 
+            case Powerup.M:
             case Powerup.R: // ???
             case Powerup.None:
             default:
-                if (readyToShoot) {
-                    GameObject bullet = Instantiate(bulletPrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
-                    elapsedTime = 0;
-                }
+                Instantiate(bulletPrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
                 break;
         }
-
-        readyToShoot = false;
-        Invoke(nameof(ResetShoot), shotCooldown);
     }
 
 
@@ -230,24 +207,6 @@ public class PlayerController : MonoBehaviour {
         //Debug.Log(bullet.transform.localPosition);
         //// rotate around center
         //bullet.transform.RotateAround(center.position, Vector3.right, 20 * Time.deltaTime);
-
-    }
-
-
-    /// <summary>
-    /// Shoot machine gun
-    /// Shoots 5 bullets at once
-    /// </summary>
-    private void ShootMBullet() {
-        float fireDelay = 1.0f;
-        float autoTimer = 0.0f;
-        for (int i = 0; i < 5; i++) {
-            autoTimer -= Time.deltaTime;
-            if (autoTimer <= 0) {
-                Instantiate(bulletPrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
-                autoTimer += fireDelay;
-            }
-        }
     }
 
 
@@ -289,6 +248,16 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     private void ResetShoot() {
         readyToShoot = true;
+    }
+
+
+    /// <summary>
+    /// Time between shots
+    /// Shortened for machine gun powerup
+    /// </summary>
+    /// <returns></returns>
+    private float GetShotCooldown() {
+        return currentPowerup == Powerup.M ? 0.15f : 0.5f;
     }
 
 
