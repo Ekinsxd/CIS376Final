@@ -22,14 +22,12 @@ public class PlayerController : MonoBehaviour {
 
     # region Bullets/Gun
     [Header("Bullets/Gun")]
-    
-    public BulletType bulletType;
+
+    public Powerup currentPowerup;
     public BulletController bulletPrefab;
     public GameObject barrelEnd;
     public GameObject gun;
-    [HideInInspector] public GameObject hCrossHair;
-    [HideInInspector] public GameObject vCrossHair;
-    
+
     #endregion Bullets/Gun
 
     [HideInInspector] public float walkSpeed;
@@ -59,13 +57,10 @@ public class PlayerController : MonoBehaviour {
 
 
     /// <summary>
-    /// 
-    /// </summary>ww
+    /// First call upon player creation
+    /// </summary>
     private void Start() {
-        // normal gun to start
-        bulletType = BulletType.Normal;
-        //hCrossHair = Resources.Load("horizon_crosshir", typeof(GameObject)) as GameObject;
-        //vCrossHair = Resources.Load("vertical_crosshir", typeof(GameObject)) as GameObject;
+        currentPowerup = Powerup.None;
         gc = GameObject.FindWithTag("GameController").GetComponent<GameController>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -102,7 +97,7 @@ public class PlayerController : MonoBehaviour {
 
 
     /// <summary>
-    /// 
+    /// Get player input for jumping and shooting
     /// </summary>
     private void MyInput() {
         horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -116,15 +111,16 @@ public class PlayerController : MonoBehaviour {
         }
 
         if (Input.GetKey(shootKey) && elapsedTime > 0.25f) {
-            BulletController bullet = Instantiate(bulletPrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
-            bullet.bulletType = this.bulletType;
-            elapsedTime = 0;
+            ShootWeapon();
         }
     }
 
 
+    #region PLAYER MOVEMENT
+
+
     /// <summary>
-    /// 
+    /// Move player in move direction
     /// </summary>
     private void MovePlayer() {
         // calculate movement direction
@@ -157,7 +153,7 @@ public class PlayerController : MonoBehaviour {
 
 
     /// <summary>
-    /// 
+    /// Player jump physics
     /// </summary>
     private void Jump() {
         // reset y velocity
@@ -168,57 +164,119 @@ public class PlayerController : MonoBehaviour {
 
 
     /// <summary>
-    /// 
+    /// Reset jump
     /// </summary>
     private void ResetJump() {
         readyToJump = true;
     }
 
 
-    #region Events
+    #endregion PLAYER MOVEMENT
+
+    #region WEAPON
 
     /// <summary>
-    /// 
+    /// Shoot weapon depending on current powerup
     /// </summary>
-    /// <param name="other"></param>
-    private void OnTriggerEnter(Collider other) {
-        // Debug.Log($"{this.name} hit {other.name}!");
+    private void ShootWeapon() {
+        switch (currentPowerup) {
+            case Powerup.S:
+                ShootSBullet();
+                break;
 
-        if (other.tag == "Bullet")
-        {
-            gc.LoseLife();
-        }
+            case Powerup.M:
+                ShootMBullet();
+                break;
 
-        int powerUp = 6;
-        switch (other.name) {
-            case "Normal":
-                powerUp = 0;
-                break;
-            case "B":
-                powerUp = 1;
-                break;
-            case "S":
-                powerUp = 2;
-                break;
-            case "M":
-                powerUp = 3;
-                break;
-            case "R":
-                powerUp = 4;
-                break;
-            case "F":
-                powerUp = 5;
-                break;
+            case Powerup.R:
+            case Powerup.F:
+            case Powerup.None:
             default:
-                // Debug.Log("unknown bullet type");
+                BulletController bullet = Instantiate(bulletPrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
+                elapsedTime = 0;
                 break;
-        }
-
-        if (bulletType == ((BulletType)powerUp)) {
-            // Debug.Log($"BULLET TYPE: {bulletType} POWERUP: {powerUp}");
         }
 
     }
 
-    #endregion Events
+
+    /// <summary>
+    /// 
+    /// </summary>
+    private void ShootMBullet() {
+
+    }
+
+
+    /// <summary>
+    /// Shoot spread bullets
+    /// Shoots multiple bullets at once
+    /// </summary>
+    private void ShootSBullet() {
+        float spreadAngle = 2.0f;       // Angle between shots
+        float timeBetweenShots = 0.5f;  // Minimum time between shots
+        float nextShot = 0.0f;
+
+        nextShot = Time.time + timeBetweenShots;
+        var hAngle = Quaternion.AngleAxis(-2.5f * spreadAngle, transform.up) * transform.rotation;
+        var hDelta = Quaternion.AngleAxis(spreadAngle, transform.up);
+
+        var vAngle = Quaternion.AngleAxis(-2.5f * spreadAngle, transform.right) * transform.rotation;
+        var vDelta = Quaternion.AngleAxis(spreadAngle, transform.right);
+
+        for (var i = 0; i < 10; i++) {
+            if (i < 5) {
+                Instantiate(bulletPrefab, barrelEnd.transform.position, hAngle);
+                hAngle = hDelta * hAngle;
+            } else {
+                Instantiate(bulletPrefab, barrelEnd.transform.position, vAngle);
+                vAngle = vDelta * vAngle;
+            }
+        }
+    }
+
+    #endregion WEAPON
+
+    #region EVENTS
+
+    /// <summary>
+    /// Handle collisions
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnTriggerEnter(Collider other) {
+        // enemy bullet
+        int enemyLayer = LayerMask.NameToLayer("Enemy");
+        if (other.tag == "Bullet" && other.gameObject.layer == enemyLayer) {
+            gc.LoseLife();
+        }
+
+        // powerup
+        int powerupLayer = LayerMask.NameToLayer("Powerup");
+        if (other.gameObject.layer == powerupLayer) {
+            int powerUp = 0;
+            switch (other.tag) {
+                case "S":
+                    powerUp = 1;
+                    break;
+                case "M":
+                    powerUp = 2;
+                    break;
+                case "R":
+                    powerUp = 3;
+                    break;
+                case "F":
+                    powerUp = 4;
+                    break;
+                default:
+                    break;
+            }
+
+            Debug.Log(((Powerup)powerUp));
+            if (powerUp > 0 && ((Powerup)powerUp) != currentPowerup) {
+                currentPowerup = ((Powerup)powerUp);
+            }
+        }
+    }
+
+    #endregion EVENTS
 }

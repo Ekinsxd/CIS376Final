@@ -5,16 +5,22 @@ using System.Timers;
 
 public class PowerupScript : MonoBehaviour {
 
+    /// <summary>
+    /// Type of powerup
+    /// </summary>
     [Header("Type")]
-    public BulletType type;
+    public Powerup type;
 
+
+    /// <summary>
+    /// Total lifetime of powerup
+    /// </summary>
     private float lifetime = 10; // 10 seconds
 
 
     // Start is called before the first frame update
-    void Start() {
-            
-    }
+    void Start() { }
+
 
     // Update is called once per frame
     void Update() {
@@ -24,29 +30,27 @@ public class PowerupScript : MonoBehaviour {
         lifetime -= Time.deltaTime;
 
         if (lifetime <= 0) {
+            Debug.Log($"lifetime exceeded for powerup {type}");
             DestroyPowerup();
         }
     }
 
 
     /// <summary>
-    /// 
+    /// Check for player collisions
     /// </summary>
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other) {
-        //Debug.Log($"{other.name} hit {this.name}!");
-
-        if (other.name == "Player") {
-            PowerupSpawner.Spawned = false;
-            Destroy(gameObject);
+        if (other.tag == "Player") {
+            DestroyPowerup();
         }
     }
 
+
     /// <summary>
-    /// 
+    /// Destroy powerup after lifetime is exceeded
     /// </summary>
     public void DestroyPowerup() {
-        Debug.Log($"lifetime exceeded for powerup {type}");
         PowerupSpawner.Spawned = false;
         Destroy(gameObject);
     }
