@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Powerups/Bullets")]
     public GameObject bulletPrefab;
+    public GameObject bulletFPrefab;
     public GameObject barrelEnd;
 
     private Powerup currentPowerup;
@@ -50,7 +51,7 @@ public class PlayerController : MonoBehaviour {
     /// First call upon player creation
     /// </summary>
     private void Start() {
-        currentPowerup = Powerup.M;
+        currentPowerup = Powerup.F;
         gc = GameObject.FindWithTag("GameController").GetComponent<GameController>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -198,17 +199,7 @@ public class PlayerController : MonoBehaviour {
     /// 
     /// </summary>
     private void ShootFBullet() {
-        //GameObject bullet = Instantiate(bulletPrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
-        //Transform center = bullet.transform.parent;
-
-        ////// offset from center
-        //Vector3 fPos = bullet.transform.localPosition;
-        //fPos.x += bullet.transform.localScale.x;
-        //bullet.transform.localPosition = fPos;
-
-        //Debug.Log(bullet.transform.localPosition);
-        //// rotate around center
-        //bullet.transform.RotateAround(center.position, Vector3.right, 20 * Time.deltaTime);
+        Instantiate(bulletFPrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
     }
 
 
@@ -259,7 +250,19 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     private float GetShotCooldown() {
-        return currentPowerup == Powerup.M ? 0.15f : 0.5f;
+        
+        switch (currentPowerup) {
+            case Powerup.S:
+                return 1f;
+            case Powerup.F:
+                return 0.35f;
+            case Powerup.M:
+                return 0.15f;
+            case Powerup.R:
+            case Powerup.None:
+            default:
+                return 0.5f;
+        }
     }
 
 

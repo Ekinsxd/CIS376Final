@@ -131,27 +131,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de71f0448a064eb45adbd4223f30f73b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 8
-  groundDrag: 4
-  jumpForce: 175
-  jumpCooldown: 1
-  airMultiplier: 0.4
-  bulletType: 0
-  bulletPrefab: {fileID: 1412330070285891663, guid: 32c97803777fcb94a9bd3b0f2b224f4f,
+  orientation: {fileID: 8116633544908135616}
+  bulletPrefab: {fileID: 3540754803236918160, guid: 32c97803777fcb94a9bd3b0f2b224f4f,
+    type: 3}
+  bulletFPrefab: {fileID: 2266528862873631172, guid: 5a81e5cfdcccf1a4b8bee610d95d1b78,
     type: 3}
   barrelEnd: {fileID: 8116633545154653527}
-  gun: {fileID: 8116633546401598669}
-  hCrossHair: {fileID: 0}
-  vCrossHair: {fileID: 0}
-  walkSpeed: 0
-  sprintSpeed: 0
-  jumpKey: 32
-  shootKey: 323
-  playerHeight: 2
-  whatIsGround:
+  groundLayer:
     serializedVersion: 2
-    m_Bits: 512
-  orientation: {fileID: 8116633544908135616}
+    m_Bits: 0
+  waterLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1 &8116633544755829043
 GameObject:
   m_ObjectHideFlags: 0
@@ -1338,12 +1329,6 @@ PrefabInstance:
 --- !u!1 &8116633545154653527 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2129182912609451033, guid: c6c2cf635ac3e0d46b276eb345cebf7b,
-    type: 3}
-  m_PrefabInstance: {fileID: 7865663911928566094}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &8116633546401598669 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2129182910603189635, guid: c6c2cf635ac3e0d46b276eb345cebf7b,
     type: 3}
   m_PrefabInstance: {fileID: 7865663911928566094}
   m_PrefabAsset: {fileID: 0}

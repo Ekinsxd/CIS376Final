@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4150101903327999041}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Spawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -601,6 +601,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 019a34bf77f2b634191c70dbed8f73cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  turret1: {fileID: 0}
+  turret2: {fileID: 0}
 --- !u!1 &8487936166084803357
 GameObject:
   m_ObjectHideFlags: 0
@@ -995,7 +997,7 @@ GameObject:
   - component: {fileID: 1650454783179404126}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Spawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1440,6 +1442,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy Spawn Trigger (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Spawner
       objectReference: {fileID: 0}
     - target: {fileID: 3745791448223334884, guid: 6186325a0df95d54591726743e17c90e,
         type: 3}
