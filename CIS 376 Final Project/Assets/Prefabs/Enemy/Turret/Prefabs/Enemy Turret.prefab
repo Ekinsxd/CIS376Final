@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 69172120631271467}
   - component: {fileID: 5785846968233253115}
   m_Layer: 14
-  m_Name: Turret
+  m_Name: Enemy Turret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,7 +130,7 @@ MonoBehaviour:
   hitSound: {fileID: 8300000, guid: af76bff4a506f4c4f9363b06c49f7ba7, type: 3}
   shootSound: {fileID: 8300000, guid: 04fab22cb4ae41547ab63d887f9378df, type: 3}
   dieSound: {fileID: 8300000, guid: 620d696cb7743b143ba167be097d1a53, type: 3}
-  range: 20
+  range: 50
 --- !u!54 &5785846968233253115
 Rigidbody:
   m_ObjectHideFlags: 0
