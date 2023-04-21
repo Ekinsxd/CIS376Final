@@ -9,14 +9,15 @@ public class Timer : MonoBehaviour
     // Start is called before the first frame update
     public float currentTime;
     public bool mainActive = true;
-    public UIDocument mainMenu;
-    public UIDocument credits;
+    public GameObject mainMenu;
+    public GameObject credits;
 
     // Update is called once per frame
     void Update()
     {
 
-        if (Input.anyKey && mainActive) { SceneManager.LoadScene(0); }
+        if (Input.anyKey && mainActive) { SceneManager.LoadScene(1); }
+        if (Input.anyKey && !mainActive) { SceneManager.LoadScene(0); }
 
         currentTime += Time.deltaTime;
         if (currentTime >= 5)
