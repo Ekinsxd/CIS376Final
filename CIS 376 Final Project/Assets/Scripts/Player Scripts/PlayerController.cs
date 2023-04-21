@@ -42,8 +42,8 @@ public class PlayerController : MonoBehaviour {
     public LayerMask waterLayer;
     private bool grounded;
     private bool inWater;
-
     private GameController gc;
+    private float iFrames;
     private const KeyCode jumpKey = KeyCode.Space;
 
     /// <summary>
@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour {
         rb.freezeRotation = true;
         readyToJump = true;
         readyToShoot = true;
+        iFrames = 0;
     }
 
 
@@ -63,6 +64,7 @@ public class PlayerController : MonoBehaviour {
     /// Update player game object
     /// </summary>
     private void Update() {
+        iFrames -= Time.deltaTime;
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight, groundLayer);
 
@@ -271,10 +273,17 @@ public class PlayerController : MonoBehaviour {
     /// <param name="other"></param>
     private void OnTriggerEnter(Collider other) {
         // enemy bullet
-        int enemyLayer = LayerMask.NameToLayer("Enemy");
-        if (other.tag == "Bullet" && other.gameObject.layer == enemyLayer) {
+        if (other.tag == "EnemyBullet") {
+            if (iFrames > 0)
+            {
+                return;
+            }
             gc.LoseLife();
+            // 1 second of invincibility
+            iFrames = 1f;
             Debug.Log($"PLAYER SHOT BY ENEMY");
+            //Runner is also an enemy 
+            Destroy(other.gameObject);
 
         }
 
@@ -303,6 +312,23 @@ public class PlayerController : MonoBehaviour {
                 currentPowerup = ((Powerup)powerUp);
                 Debug.Log($"REACHED POWERUP: {currentPowerup}");
             }
+        }
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        if (other.collider.tag == "EnemyBullet")
+        {
+            if (iFrames > 0)
+            {
+                return;
+            }
+            gc.LoseLife();
+            // 1 second of invincibility
+            iFrames = 1f;
+            Debug.Log($"PLAYER TACKLED BY ENEMY");
+            //Runner is also an enemy 
+            Destroy(other.gameObject);
         }
     }
 

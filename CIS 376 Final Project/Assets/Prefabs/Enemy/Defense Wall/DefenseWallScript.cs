@@ -17,6 +17,6 @@ public class DefenseWallScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(turret1.gameObject. )
+        // if(turret1.gameObject. )
     }
 }

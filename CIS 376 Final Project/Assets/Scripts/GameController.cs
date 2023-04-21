@@ -58,6 +58,10 @@ public class GameController : MonoBehaviour
     {
         UIC.LoseLife(3 - Lives);
         Lives--;
+        if (Lives == 0)
+        {
+            UIC.SetGameOver();
+        }
     }
 
 }

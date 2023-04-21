@@ -117,7 +117,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 0}
   health: 1
-  projectile: {fileID: 3540754803236918160, guid: 32c97803777fcb94a9bd3b0f2b224f4f,
+  projectile: {fileID: 3540754803236918160, guid: 4982070502c60b042bddc3ad6638fd76,
     type: 3}
   fireDelay: 2
   hitSound: {fileID: 8300000, guid: af76bff4a506f4c4f9363b06c49f7ba7, type: 3}

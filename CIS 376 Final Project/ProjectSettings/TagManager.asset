@@ -18,6 +18,7 @@ TagManager:
   - GameOver
   - Life
   - Spawner
+  - EnemyBullet
   layers:
   - Default
   - TransparentFX

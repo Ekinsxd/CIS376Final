@@ -920,6 +920,16 @@ PrefabInstance:
       propertyPath: m_TagString
       value: UI
       objectReference: {fileID: 0}
+    - target: {fileID: 7175038379068370992, guid: 0149e4e0bacb0a7479dcb55507262a4e,
+        type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7175038379068370994, guid: 0149e4e0bacb0a7479dcb55507262a4e,
+        type: 3}
+      propertyPath: m_Name
+      value: Bloodshot
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0149e4e0bacb0a7479dcb55507262a4e, type: 3}
 --- !u!1001 &1013408116
@@ -1084,6 +1094,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1922801336}
     m_Modifications:
+    - target: {fileID: 407285328546427894, guid: d39844aab0e1f2d429245072bee5b46e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.03507704
+      objectReference: {fileID: 0}
+    - target: {fileID: 407285328546427894, guid: d39844aab0e1f2d429245072bee5b46e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.0018438407
+      objectReference: {fileID: 0}
     - target: {fileID: 1515841483486723313, guid: d39844aab0e1f2d429245072bee5b46e,
         type: 3}
       propertyPath: m_Name
@@ -1143,6 +1163,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791767671962440454, guid: d39844aab0e1f2d429245072bee5b46e,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.6652962
+      objectReference: {fileID: 0}
+    - target: {fileID: 3791767671962440454, guid: d39844aab0e1f2d429245072bee5b46e,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.54285085
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d39844aab0e1f2d429245072bee5b46e, type: 3}
