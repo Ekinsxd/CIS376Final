@@ -12,22 +12,30 @@ public class PlayerAnimationController : MonoBehaviour {
         playerAnimator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// This function updates the animation states of a player based on their movement input.
+    /// </summary>
+    /// <returns>
+    /// If `playerAnimator` is `null`, the function returns without doing anything.
+    /// </returns>
     void Update() {
         bool walking = false;
         bool running = false;
-        if (playerAnimator != null) {
-            foreach (KeyCode key in moveKeys) {
-                if (Input.GetKey(key)) {
-                    running = Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift);
-                    walking = !running;
-                    break;
-                }
-            }
 
-            // set animation states
-            playerAnimator.SetBool("walking", walking);
-            playerAnimator.SetBool("running", running);
+        if (playerAnimator == null) {
+            return;
         }
+
+        foreach (KeyCode key in moveKeys) {
+            if (Input.GetKey(key)) {
+                running = Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift);
+                walking = !running;
+                break;
+            }
+        }
+        
+        // set animation states
+        playerAnimator.SetBool("walking", walking);
+        playerAnimator.SetBool("running", running);
     }
 }

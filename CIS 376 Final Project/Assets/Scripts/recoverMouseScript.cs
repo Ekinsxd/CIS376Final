@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class recoverMouseScript : MonoBehaviour
 {
-    // Start is called before the first frame update
+    /// <summary>
+    /// The function sets the cursor lock state to none and makes it visible in a C# program.
+    /// </summary>
     void Start()
     {
-        
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }

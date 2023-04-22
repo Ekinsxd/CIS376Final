@@ -25,6 +25,9 @@ public class PowerupSpawner : MonoBehaviour {
 
 
     // Start is called before the first frame update
+    /// <summary>
+    /// The Start function initializes a boolean variable called Spawned to false.
+    /// </summary>
     void Start() {
         Spawned = false;
     }
@@ -35,9 +38,13 @@ public class PowerupSpawner : MonoBehaviour {
 
 
     /// <summary>
-    /// Check for player collision
+    /// This function spawns a random powerup when the player collides with a trigger collider, but only
+    /// if a powerup has not already been spawned.
     /// </summary>
-    /// <param name="other"></param>
+    /// <param name="Collider">Collider is a component in Unity that defines the shape of an object's
+    /// collision boundary. It is used to detect collisions with other objects in the game world. In
+    /// this code snippet, OnTriggerEnter is a method that is called when the collider of the current
+    /// object collides with another collider. The parameter "other</param>
     void OnTriggerEnter(Collider other) {
         if (other.name == "Player") {
             if (!Spawned) {
@@ -49,9 +56,11 @@ public class PowerupSpawner : MonoBehaviour {
 
 
     /// <summary>
-    /// Spawn a random powerup in game
+    /// This function spawns a random powerup near the player, ensuring that the same powerup is not
+    /// spawned twice.
     /// </summary>
-    /// <param name="player"></param>
+    /// <param name="GameObject">The parameter "GameObject player" is a reference to the player object
+    /// in the game.</param>
     void SpawnRandomPowerup(GameObject player) {
         int powerupType = Random.Range(0, 4);
         GameObject powerup = powerups[powerupType];

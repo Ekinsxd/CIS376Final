@@ -9,7 +9,9 @@ public class cameraPosition : MonoBehaviour {
 
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// The Update function sets the position of the object to match the position of the camera.
+    /// </summary>
     void Update() {
         transform.position = cameraPos.position;
     }

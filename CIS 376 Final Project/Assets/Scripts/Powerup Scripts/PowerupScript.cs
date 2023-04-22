@@ -22,7 +22,10 @@ public class PowerupScript : MonoBehaviour {
     void Start() { }
 
 
-    // Update is called once per frame
+
+    /// <summary>
+    /// This function rotates a powerup object and destroys it if its lifetime has exceeded.
+    /// </summary>
     void Update() {
         // transform.up because the axis' are a little off
         // from when I made the 3D powerups in Blender :/
@@ -37,9 +40,12 @@ public class PowerupScript : MonoBehaviour {
 
 
     /// <summary>
-    /// Check for player collisions
+    /// This function destroys a powerup when the player collides with it.
     /// </summary>
-    /// <param name="other"></param>
+    /// <param name="Collider">Collider is a component in Unity that defines the shape of an object's
+    /// collision boundary. It is used to detect collisions with other objects in the game world. In
+    /// this code snippet, OnTriggerEnter is a method that is called when the collider of the object
+    /// this script is attached to collides with another collider.</param>
     private void OnTriggerEnter(Collider other) {
         if (other.tag == "Player") {
             DestroyPowerup();

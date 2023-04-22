@@ -8,20 +8,24 @@ public class FBulletScript : MonoBehaviour {
     Vector3 direction;
     float lifeTime = 0.0f;
     float maxLife = 5.0f;
-    // Start is called before the first frame update
+
+    /// <summary>
+    /// The function adds an impulse force to the rigidbody component of the game object in the forward
+    /// direction only once at the creation of the object.
+    /// </summary>
     void Start() {
         rb = GetComponent<Rigidbody>();
         direction = transform.forward;
+        rb.AddForce(direction * 4.0f, ForceMode.Impulse);
     }
 
     // Update is called once per frame
+    /// <summary>
+    /// The function updates the position and rotation of a game object representing a bullet.
+    /// </summary>
     void Update() {
-
-        if (lifeTime <= 0.0f) {
-            rb.AddForce(transform.forward * 4.0f, ForceMode.Impulse);
-        }
-
         lifeTime += Time.deltaTime;
+
         if (lifeTime > maxLife) {
             Destroy(gameObject);
         }
@@ -31,6 +35,14 @@ public class FBulletScript : MonoBehaviour {
     }
 
 
+    /// <summary>
+    /// The function destroys the game object if it collides with anything other than a bullet, spawner,
+    /// or player.
+    /// </summary>
+    /// <param name="Collider">Collider is a component in Unity that represents the shape of an object
+    /// for the purposes of physical collisions. It can be attached to any GameObject and defines a
+    /// boundary around the object that can interact with other colliders in the scene. In this code
+    /// snippet, the OnTriggerEnter method is called when another collider enters the</param>
     private void OnTriggerEnter(Collider other) {
         if (other.tag != "Bullet" && other.tag != "Spawner" && other.tag != "Player")
             Destroy(gameObject);

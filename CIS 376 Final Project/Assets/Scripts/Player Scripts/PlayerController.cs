@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour {
 
 
     /// <summary>
-    /// Get player input for jumping and shooting
+    /// The function handles player input for movement, jumping, and shooting in a game.
     /// </summary>
     private void MyInput() {
         horizontalInput = Input.GetAxisRaw("Horizontal");
@@ -140,7 +140,7 @@ public class PlayerController : MonoBehaviour {
 
 
     /// <summary>
-    /// 
+    /// This function limits the velocity of a rigidbody in a 3D space.
     /// </summary>
     private void SpeedControl() {
         Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
@@ -154,7 +154,8 @@ public class PlayerController : MonoBehaviour {
 
 
     /// <summary>
-    /// Player jump physics
+    /// The Jump function adds force to the rigidbody to make the object jump and adjusts its mass based
+    /// on whether it's in the air or falling.
     /// </summary>
     private void Jump() {
         if (grounded) {
@@ -181,9 +182,9 @@ public class PlayerController : MonoBehaviour {
 
     #region WEAPON
 
-    /// <summary>
-    /// Shoot weapon depending on current powerup
-    /// </summary>
+   /// <summary>
+   /// The function ShootWeapon shoots different types of bullets based on the current powerup.
+   /// </summary>
     private void ShootWeapon() {
         switch (currentPowerup) {
             case Powerup.S:
@@ -191,7 +192,7 @@ public class PlayerController : MonoBehaviour {
                 break;
 
             case Powerup.F:
-                ShootFBullet();
+                Instantiate(bulletFPrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
                 break;
 
             case Powerup.M:
@@ -202,15 +203,6 @@ public class PlayerController : MonoBehaviour {
                 break;
         }
     }
-
-
-    /// <summary>
-    /// 
-    /// </summary>
-    private void ShootFBullet() {
-        Instantiate(bulletFPrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
-    }
-
 
 
     /// <summary>
@@ -241,10 +233,14 @@ public class PlayerController : MonoBehaviour {
 
 
     /// <summary>
-    /// Time between shots
-    /// Shortened for machine gun powerup
+    /// This function returns the cooldown time for shooting based on the current powerup.
     /// </summary>
-    /// <returns></returns>
+    /// <returns>
+    /// The method `GetShotCooldown()` returns a float value representing the cooldown time for
+    /// shooting, based on the current powerup selected. The value returned depends on the
+    /// currentPowerup variable, which is of type Powerup (an enum type). If the currentPowerup is S,
+    /// the method returns 1f, if it is F, it returns 0.35f, if it is M
+    /// </returns>
     private float GetShotCooldown() {
 
         switch (currentPowerup) {
@@ -267,10 +263,19 @@ public class PlayerController : MonoBehaviour {
 
     #region EVENTS
 
+
     /// <summary>
-    /// Handle collisions
+    /// This function handles collision events for the player, detecting collisions with enemy bullets
+    /// and powerups.
     /// </summary>
-    /// <param name="other"></param>
+    /// <param name="Collider">A collider is a component that defines the shape of an object for the
+    /// purposes of physical collisions in Unity. It is used to detect when other objects come into
+    /// contact with the collider's shape. In this code, the OnTriggerEnter method is called when
+    /// another collider enters the trigger zone of the collider attached to this</param>
+    /// <returns>
+    /// If the other object's tag is "EnemyBullet" and the player's iFrames (invincibility frames) are
+    /// greater than 0, then the function returns without executing the rest of the code.
+    /// </returns>
     private void OnTriggerEnter(Collider other) {
         // enemy bullet
         if (other.tag == "EnemyBullet") {
@@ -316,9 +321,15 @@ public class PlayerController : MonoBehaviour {
 
 
     /// <summary>
-    /// 
+    /// This function detects collision with an enemy bullet and reduces the player's life, while also
+    /// providing a brief period of invincibility.
     /// </summary>
-    /// <param name="other"></param>
+    /// <param name="Collision">A class in Unity that represents a collision between two objects in the
+    /// game world.</param>
+    /// <returns>
+    /// If the `iFrames` variable is greater than 0, the function will return and not execute the rest
+    /// of the code block.
+    /// </returns>
     private void OnCollisionEnter(Collision other) {
         if (other.collider.tag == "EnemyBullet") {
             if (iFrames > 0) {

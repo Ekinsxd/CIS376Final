@@ -11,7 +11,11 @@ public class GameController : MonoBehaviour
     bool GameOver = false;
     bool Win = false;
     UIController UIC;
-    // Start is called before the first frame update
+
+    /// <summary>
+    /// The Start function sets the DeathTimer to 1.5f and gets the UIController component from a
+    /// GameObject with the "UI" tag.
+    /// </summary>
     void Start()
     {
         DeathTimer = 1.5f;
@@ -19,6 +23,10 @@ public class GameController : MonoBehaviour
     }
 
     // Update is called once per frame
+    /// <summary>
+    /// The function updates the game state and loads the appropriate scene based on whether the player
+    /// has lost or won.
+    /// </summary>
     void Update()
     {
         if (Lives <= 0)
@@ -44,16 +52,32 @@ public class GameController : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// The function adds a given score to the current score.
+    /// </summary>
+    /// <param name="score">The parameter "score" is an integer value that represents the amount of
+    /// points to be added to the current score.</param>
     public void AddScore(int score)
     {
         Score += score;
     }
 
+    /// <summary>
+    /// This function returns a boolean value indicating whether the game is over or not.
+    /// </summary>
+    /// <returns>
+    /// The method isGameOver() is returning a boolean value, specifically the value of the variable
+    /// GameOver.
+    /// </returns>
     public bool isGameOver()
     {
         return GameOver;
     }
 
+    /// <summary>
+    /// The function decreases the number of lives a player has and triggers a game over if the player
+    /// has no more lives.
+    /// </summary>
     public void LoseLife()
     {
         UIC.LoseLife(3 - Lives);

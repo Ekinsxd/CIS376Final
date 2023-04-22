@@ -9,14 +9,27 @@ public class BridgeScript : MonoBehaviour
     private float timer = 1;
     private Transform[] Bridges;
     private bool started = false;
-    // Start is called before the first frame update
+
+    /// <summary>
+    /// The Start function finds the player GameObject and gets the child transforms of the current
+    /// GameObject (bridge links).
+    /// </summary>
     void Start()
     {
         Player = GameObject.Find("Player");
         Bridges =  GetComponentsInChildren<Transform>();
     }
 
-    // Update is called once per frame
+    /// <summary>
+    /// This function updates the state of bridges in the game and triggers an explosion on each bridge
+    /// after a certain amount of time has passed.
+    /// </summary>
+    /// <returns>
+    /// If the condition `if (!started)` is true, then the function returns without executing the rest
+    /// of the code. If the condition `if (timer <= 0)` is true for any link in the `foreach` loop,
+    /// then the code inside the loop is skipped and the loop moves on to the next link. If none of
+    /// these conditions are met, then nothing is returned and the function continues
+    /// </returns>
     void Update()
     {
         //refresh the bridges array
@@ -30,22 +43,38 @@ public class BridgeScript : MonoBehaviour
             started = true;
         }
         
-        if (started)
+        if (!started)
         {
-            foreach (Transform link in Bridges)
-            {
-                if (link != transform)
-                {
-                    if (timer > 0)
-                    {
-                        var explosions = Instantiate(explosion, link.position, link.rotation);
-                        explosions.transform.rotation = Quaternion.Lerp(link.rotation, Quaternion.FromToRotation(Vector3.up, Vector3.up), 10);
-                        Destroy(link.gameObject);
-                        timer = -0.3f;
-                        return;
-                    }
-                }
-            }
+            return;
         }
+        
+        foreach (Transform link in Bridges)
+        {
+            if (link == transform)
+            {
+                continue;
+            }
+            if (timer <= 0)
+                {
+                continue;
+            }
+            BlowUp(link);
+            return;
+        }
+    }
+
+    /// <summary>
+    /// The function creates an explosion at the position and rotation of a given transform, destroys
+    /// the transform, and sets a timer.
+    /// </summary>
+    /// <param name="Transform">Transform is a data type in Unity that represents the position,
+    /// rotation, and scale of a game object. It is used to manipulate the position, rotation, and scale
+    /// of a game object in the scene. In this code, the Transform parameter is used to specify the
+    /// position and rotation of the explosion object</param>
+    void BlowUp(Transform link){
+        var explosions = Instantiate(explosion, link.position, link.rotation);
+        explosions.transform.rotation = Quaternion.Lerp(link.rotation, Quaternion.FromToRotation(Vector3.up, Vector3.up), 10);
+        Destroy(link.gameObject);
+        timer = -0.3f;
     }
 }
