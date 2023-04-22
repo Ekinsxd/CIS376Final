@@ -12,9 +12,9 @@ public class PlayerController : MonoBehaviour {
     // FIX JUMPING
 
     #region Movement
-    private const float playerHeight = 2.5f;
+    private const float playerHeight = 2f;
     private const float groundDrag = 4;
-    private const float jumpForce = 175;
+    private const float airMultiplier = 0.3f;
     private const float jumpCooldown = 1;
     //private const float airMultiplier = 0.4f;
 
@@ -78,7 +78,6 @@ public class PlayerController : MonoBehaviour {
         // handle drag
         if (grounded) {
             rb.drag = groundDrag;
-            rb.mass = 10;
         } else
             rb.drag = 0;
     }
@@ -136,6 +135,9 @@ public class PlayerController : MonoBehaviour {
         if (grounded) {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Acceleration);
         }
+        else {
+            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Acceleration);
+        }
     }
 
 
@@ -159,13 +161,10 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     private void Jump() {
         if (grounded) {
-            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-        }
-
-        if (rb.velocity.y >= 0) { // in air
-            rb.mass = 10;
-        } else if (rb.velocity.y < 0) { // falling
-            rb.mass = 80;
+            Vector3 currVel = rb.velocity;
+            currVel.y = 12;
+            rb.velocity = currVel;
+            // rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
         }
     }
 
