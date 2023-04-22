@@ -41,7 +41,7 @@ public class PowerupSpawner : MonoBehaviour {
     void OnTriggerEnter(Collider other) {
         if (other.name == "Player") {
             if (!Spawned) {
-                SpawnRandomPowerup(other.transform);
+                SpawnRandomPowerup(other.gameObject);
                 Spawned = true;
             }
         }
@@ -52,19 +52,27 @@ public class PowerupSpawner : MonoBehaviour {
     /// Spawn a random powerup in game
     /// </summary>
     /// <param name="player"></param>
-    void SpawnRandomPowerup(Transform player) {
+    void SpawnRandomPowerup(GameObject player) {
         int powerupType = Random.Range(0, 4);
         GameObject powerup = powerups[powerupType];
-        
-        // TODO: reset spawnedPowerups once all are true
+
         // ensures that we don't spawn the same powerup twice
         while (spawnedPowerups[powerupType]) {
             powerupType = Random.Range(0, 4);
             powerup = powerups[powerupType];
         }
-        
-        Vector3 pos = player.position + (player.forward * 20);
-        Instantiate(powerup, pos, Quaternion.identity);
+
+        Vector3 powerupPos = player.transform.position + (player.transform.forward * 20);
+
+        if (powerupPos.y > 2) { // player in air (spawn powerup on ground)
+            RaycastHit hit;
+            if (Physics.Raycast(player.transform.position, Vector3.down, out hit)) {
+                powerupPos.y -= hit.distance;
+                powerupPos.y += 1;
+            }
+        }
+
+        Instantiate(powerup, powerupPos, Quaternion.identity);
         spawnedPowerups[powerupType] = true;
     }
 }

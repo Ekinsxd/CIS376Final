@@ -14,31 +14,20 @@ public class PlayerAnimationController : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        float horizontalValue = Input.GetAxis("Horizontal");
-        float verticalValue = Input.GetAxis("Vertical");
-
+        bool walking = false;
+        bool running = false;
         if (playerAnimator != null) {
             foreach (KeyCode key in moveKeys) {
                 if (Input.GetKey(key)) {
-                    bool running = Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift);
-                    if (running) {
-                        // running
-                        playerAnimator.SetBool("walking", false);
-                        playerAnimator.SetBool("running", true);
-                    } else {
-                        // walking
-                        playerAnimator.SetBool("running", false);
-                        playerAnimator.SetBool("walking", true);
-                    }
+                    running = Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift);
+                    walking = !running;
                     break;
                 }
             }
-            // aiming?
-            playerAnimator.SetBool("aiming", Input.GetKey(KeyCode.Mouse1));
-            Debug.Log($"WALKING: {playerAnimator.GetBool("walking")}");
-            Debug.Log($"RUNNING: {playerAnimator.GetBool("running")}");
-            Debug.Log($"AIMING: {playerAnimator.GetBool("aiming")}");
 
+            // set animation states
+            playerAnimator.SetBool("walking", walking);
+            playerAnimator.SetBool("running", running);
         }
     }
 }

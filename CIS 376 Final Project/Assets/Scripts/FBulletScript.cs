@@ -2,24 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FBulletScript : MonoBehaviour
-{
+public class FBulletScript : MonoBehaviour {
     public float bulletSpeed;
     Rigidbody rb;
     Vector3 direction;
     float lifeTime = 0.0f;
     float maxLife = 5.0f;
     // Start is called before the first frame update
-    void Start()
-    {
+    void Start() {
         rb = GetComponent<Rigidbody>();
         direction = transform.forward;
     }
 
     // Update is called once per frame
-    void Update()
-    {
-        
+    void Update() {
+
         if (lifeTime <= 0.0f) {
             rb.AddForce(transform.forward * 4.0f, ForceMode.Impulse);
         }
@@ -33,7 +30,7 @@ public class FBulletScript : MonoBehaviour
         transform.rotation = rotation;
     }
 
-    
+
     private void OnTriggerEnter(Collider other) {
         if (other.tag != "Bullet" && other.tag != "Spawner" && other.tag != "Player")
             Destroy(gameObject);

@@ -8,16 +8,19 @@ using TMPro;
 /// </summary>
 public class PlayerController : MonoBehaviour {
 
+    // SHOOT SPORADICALLY (use f bullet for inspo)
+    // FIX JUMPING
+
     #region Movement
-    private const float playerHeight = 4;
-    private const float moveSpeed = 8;
+    private const float playerHeight = 2.5f;
     private const float groundDrag = 4;
     private const float jumpForce = 175;
     private const float jumpCooldown = 1;
-    private const float airMultiplier = 0.4f;
+    //private const float airMultiplier = 0.4f;
 
     private float horizontalInput;
     private float verticalInput;
+    private float moveSpeed = 8;
 
     private bool readyToJump;
 
@@ -40,7 +43,6 @@ public class PlayerController : MonoBehaviour {
 
     [Header("Ground/Water Check")]
     public LayerMask groundLayer;
-    public LayerMask waterLayer;
     private bool grounded;
     private bool inWater;
     private GameController gc;
@@ -51,7 +53,7 @@ public class PlayerController : MonoBehaviour {
     /// First call upon player creation
     /// </summary>
     private void Start() {
-        currentPowerup = Powerup.F;
+        currentPowerup = Powerup.None;
         gc = GameObject.FindWithTag("GameController").GetComponent<GameController>();
         rb = GetComponent<Rigidbody>();
         rb.freezeRotation = true;
@@ -66,6 +68,7 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     private void Update() {
         iFrames -= Time.deltaTime;
+
         // ground check
         grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight, groundLayer);
 
@@ -73,9 +76,10 @@ public class PlayerController : MonoBehaviour {
         SpeedControl();
 
         // handle drag
-        if (grounded)
+        if (grounded) {
             rb.drag = groundDrag;
-        else
+            rb.mass = 10;
+        } else
             rb.drag = 0;
     }
 
@@ -95,17 +99,22 @@ public class PlayerController : MonoBehaviour {
         horizontalInput = Input.GetAxisRaw("Horizontal");
         verticalInput = Input.GetAxisRaw("Vertical");
 
-        inWater = Physics.Raycast(transform.position, Vector3.down, playerHeight, waterLayer);
+        bool running = grounded && (Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift));
+        if (running) {
+            moveSpeed = 10;
+        } else {
+            moveSpeed = 8;
+        }
 
         // when to jump
-        if (Input.GetKey(jumpKey) && readyToJump && grounded && !inWater) {
+        if (Input.GetKey(jumpKey) && readyToJump && grounded) {
             readyToJump = false;
             Jump();
             Invoke(nameof(ResetJump), jumpCooldown);
         }
 
         // shoot weapon
-        if (Input.GetMouseButton(0) && readyToShoot) {
+        if (Input.GetMouseButton(0) && readyToShoot && !running) {
             readyToShoot = false;
             ShootWeapon();
             Invoke(nameof(ResetShoot), GetShotCooldown());
@@ -126,11 +135,6 @@ public class PlayerController : MonoBehaviour {
         // on ground
         if (grounded) {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Acceleration);
-        }
-
-        // in air
-        else if (!grounded) {
-            rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Force);
         }
     }
 
@@ -153,10 +157,15 @@ public class PlayerController : MonoBehaviour {
     /// Player jump physics
     /// </summary>
     private void Jump() {
-        // reset y velocity
-        rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+        if (grounded) {
+            rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        }
 
-        rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        if (rb.velocity.y >= 0) { // in air
+            rb.mass = 10;
+        } else if (rb.velocity.y < 0) { // falling
+            rb.mass = 80;
+        }
     }
 
 
@@ -186,7 +195,7 @@ public class PlayerController : MonoBehaviour {
                 break;
 
             case Powerup.M:
-            case Powerup.R: // ???
+            case Powerup.R:
             case Powerup.None:
             default:
                 Instantiate(bulletPrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
@@ -203,35 +212,22 @@ public class PlayerController : MonoBehaviour {
     }
 
 
+
     /// <summary>
     /// Shoot spread bullets
     /// Shoots multiple bullets at once
     /// </summary>
     private void ShootSBullet() {
-        float numBullets = 5.0f; // per axis (5 horizontal, 5 vertical)
-        float spreadAngle = 2.0f; // angle between bullets
-        float startAngle = -(numBullets * spreadAngle) / 2.0f; // start at half of total spread (negative)
+        int numBullets = 10;
+        float spreadAngle = 1.0f; // angle between bullets
+        float totalSpread = numBullets * spreadAngle;
 
-        // Creates a rotation which rotates startAngle degrees around y-axis.
-        Quaternion hAngle = Quaternion.AngleAxis(startAngle, orientation.up) * barrelEnd.transform.rotation;
-        Quaternion hDelta = Quaternion.AngleAxis(spreadAngle, orientation.up);
+        float startAngle = -(totalSpread) / 2.0f; // start at half of total spread
+        float endAngle = startAngle + totalSpread;
 
-        // Creates a rotation which rotates startAngle degrees around x-axis.
-        Quaternion vAngle = Quaternion.AngleAxis(startAngle, orientation.right) * barrelEnd.transform.rotation;
-        Quaternion vDelta = Quaternion.AngleAxis(spreadAngle, orientation.right);
-
-        for (var i = 0; i < (numBullets * 2); i++) {
-            if (i < 5) { // horizontal spread
-                Instantiate(bulletPrefab, barrelEnd.transform.position, hAngle);
-                hAngle = hDelta * hAngle; // rotate
-
-            } else {
-                // vertical spread
-                if (i != 8) { // share middle bullet
-                    Instantiate(bulletPrefab, barrelEnd.transform.position, vAngle);
-                }
-                vAngle = vDelta * vAngle; // rotate
-            }
+        for (var i = 0; i < numBullets; i++) {
+            Quaternion rotation = barrelEnd.transform.rotation * Quaternion.Euler(new Vector3(Random.Range(startAngle, endAngle), Random.Range(startAngle, endAngle), 0));
+            Instantiate(bulletPrefab, barrelEnd.transform.position, rotation);
         }
     }
 
@@ -250,7 +246,7 @@ public class PlayerController : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     private float GetShotCooldown() {
-        
+
         switch (currentPowerup) {
             case Powerup.S:
                 return 1f;
@@ -259,6 +255,7 @@ public class PlayerController : MonoBehaviour {
             case Powerup.M:
                 return 0.15f;
             case Powerup.R:
+                return 0.15f / 2;
             case Powerup.None:
             default:
                 return 0.5f;
@@ -277,8 +274,7 @@ public class PlayerController : MonoBehaviour {
     private void OnTriggerEnter(Collider other) {
         // enemy bullet
         if (other.tag == "EnemyBullet") {
-            if (iFrames > 0)
-            {
+            if (iFrames > 0) {
                 return;
             }
             gc.LoseLife();
@@ -318,12 +314,14 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    private void OnCollisionEnter(Collision other)
-    {
-        if (other.collider.tag == "EnemyBullet")
-        {
-            if (iFrames > 0)
-            {
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="other"></param>
+    private void OnCollisionEnter(Collision other) {
+        if (other.collider.tag == "EnemyBullet") {
+            if (iFrames > 0) {
                 return;
             }
             gc.LoseLife();
