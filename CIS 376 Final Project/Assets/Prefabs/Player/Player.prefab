@@ -140,10 +140,10 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 512
-  jumpSound: {fileID: 0}
-  walkSound: {fileID: 0}
-  runSound: {fileID: 0}
-  hitSound: {fileID: 0}
+  jumpSound: {fileID: 8116633546206894244}
+  walkSound: {fileID: 8116633545926247420}
+  runSound: {fileID: 8116633545114774981}
+  hitSound: {fileID: 8116633546683679303}
 --- !u!1 &8116633544755829043
 GameObject:
   m_ObjectHideFlags: 0
