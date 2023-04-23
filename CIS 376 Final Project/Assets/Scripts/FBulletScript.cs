@@ -46,7 +46,9 @@ public class FBulletScript : MonoBehaviour {
     /// boundary around the object that can interact with other colliders in the scene. In this code
     /// snippet, the OnTriggerEnter method is called when another collider enters the</param>
     private void OnTriggerEnter(Collider other) {
-        if (other.tag != "Bullet" && other.tag != "Spawner" && other.tag != "Player")
+        int noncollideableLayer = LayerMask.NameToLayer("Non-collideable");
+
+        if (other.tag != "Bullet" && other.tag != "Spawner" && other.tag != "Player" && other.gameObject.layer != noncollideableLayer)
             Destroy(gameObject);
     }
 }

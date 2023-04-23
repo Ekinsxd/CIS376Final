@@ -275,6 +275,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Spawn Trigger (6)
       objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Spawner
+      objectReference: {fileID: 0}
     - target: {fileID: 3745791448223334884, guid: 6186325a0df95d54591726743e17c90e,
         type: 3}
       propertyPath: m_RootOrder
@@ -344,6 +354,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Spawn Trigger (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Spawner
+      objectReference: {fileID: 0}
     - target: {fileID: 3745791448223334884, guid: 6186325a0df95d54591726743e17c90e,
         type: 3}
       propertyPath: m_RootOrder
@@ -412,6 +432,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy Spawn Trigger (10)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Spawner
       objectReference: {fileID: 0}
     - target: {fileID: 3745791448223334884, guid: 6186325a0df95d54591726743e17c90e,
         type: 3}
@@ -550,6 +580,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy Spawn Trigger (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Spawner
       objectReference: {fileID: 0}
     - target: {fileID: 3745791448223334884, guid: 6186325a0df95d54591726743e17c90e,
         type: 3}
@@ -947,7 +987,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &354003871
 Transform:
   m_ObjectHideFlags: 0
@@ -1078,6 +1118,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy Spawn Trigger (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Spawner
       objectReference: {fileID: 0}
     - target: {fileID: 3745791448223334884, guid: 6186325a0df95d54591726743e17c90e,
         type: 3}
@@ -1757,6 +1807,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Spawn Trigger (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Spawner
+      objectReference: {fileID: 0}
     - target: {fileID: 3745791448223334884, guid: 6186325a0df95d54591726743e17c90e,
         type: 3}
       propertyPath: m_RootOrder
@@ -2175,6 +2235,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Spawn Trigger (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Spawner
+      objectReference: {fileID: 0}
     - target: {fileID: 3745791448223334884, guid: 6186325a0df95d54591726743e17c90e,
         type: 3}
       propertyPath: m_RootOrder
@@ -2243,6 +2313,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy Spawn Trigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Spawner
       objectReference: {fileID: 0}
     - target: {fileID: 3745791448223334884, guid: 6186325a0df95d54591726743e17c90e,
         type: 3}
@@ -2795,6 +2875,31 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8116633544639590802, guid: 118d09929ce66e347a906f258d9fc870,
         type: 3}
+      propertyPath: hitSound
+      value: 
+      objectReference: {fileID: 1013408118}
+    - target: {fileID: 8116633544639590802, guid: 118d09929ce66e347a906f258d9fc870,
+        type: 3}
+      propertyPath: runSound
+      value: 
+      objectReference: {fileID: 1013408119}
+    - target: {fileID: 8116633544639590802, guid: 118d09929ce66e347a906f258d9fc870,
+        type: 3}
+      propertyPath: jumpSound
+      value: 
+      objectReference: {fileID: 1013408120}
+    - target: {fileID: 8116633544639590802, guid: 118d09929ce66e347a906f258d9fc870,
+        type: 3}
+      propertyPath: shotSound
+      value: 
+      objectReference: {fileID: 1013408117}
+    - target: {fileID: 8116633544639590802, guid: 118d09929ce66e347a906f258d9fc870,
+        type: 3}
+      propertyPath: walkSound
+      value: 
+      objectReference: {fileID: 1013408120}
+    - target: {fileID: 8116633544639590802, guid: 118d09929ce66e347a906f258d9fc870,
+        type: 3}
       propertyPath: bulletPrefab
       value: 
       objectReference: {fileID: 3540754803236918160, guid: 32c97803777fcb94a9bd3b0f2b224f4f,
@@ -2891,6 +2996,30 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 118d09929ce66e347a906f258d9fc870, type: 3}
+--- !u!82 &1013408117 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8398525162043295040, guid: 118d09929ce66e347a906f258d9fc870,
+    type: 3}
+  m_PrefabInstance: {fileID: 1013408116}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1013408118 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8116633546683679303, guid: 118d09929ce66e347a906f258d9fc870,
+    type: 3}
+  m_PrefabInstance: {fileID: 1013408116}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1013408119 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8116633545114774981, guid: 118d09929ce66e347a906f258d9fc870,
+    type: 3}
+  m_PrefabInstance: {fileID: 1013408116}
+  m_PrefabAsset: {fileID: 0}
+--- !u!82 &1013408120 stripped
+AudioSource:
+  m_CorrespondingSourceObject: {fileID: 8116633545926247420, guid: 118d09929ce66e347a906f258d9fc870,
+    type: 3}
+  m_PrefabInstance: {fileID: 1013408116}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1016425020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3076,10 +3205,30 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 3c280858aeb60624b80d8fa8391ce1aa, type: 2}
+    - target: {fileID: 4485388271253904463, guid: 9b97a83a0a211a747b2f8ed5da457dc6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 4485388271253904463, guid: 9b97a83a0a211a747b2f8ed5da457dc6,
+        type: 3}
+      propertyPath: m_TagString
+      value: Spawner
+      objectReference: {fileID: 0}
+    - target: {fileID: 4720719520978050369, guid: 9b97a83a0a211a747b2f8ed5da457dc6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
     - target: {fileID: 4829198334981295711, guid: 9b97a83a0a211a747b2f8ed5da457dc6,
         type: 3}
       propertyPath: m_Name
       value: Level_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4844744716888721612, guid: 9b97a83a0a211a747b2f8ed5da457dc6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 5135558674983705233, guid: 9b97a83a0a211a747b2f8ed5da457dc6,
         type: 3}
@@ -3095,6 +3244,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalPosition.z
       value: 11.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7129001503408089923, guid: 9b97a83a0a211a747b2f8ed5da457dc6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 8089720603534687274, guid: 9b97a83a0a211a747b2f8ed5da457dc6,
         type: 3}
@@ -3150,6 +3304,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8598719012191247436, guid: 9b97a83a0a211a747b2f8ed5da457dc6,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 9151178687528660949, guid: 9b97a83a0a211a747b2f8ed5da457dc6,
         type: 3}
@@ -3383,6 +3542,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy Spawn Trigger (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Spawner
+      objectReference: {fileID: 0}
     - target: {fileID: 3745791448223334884, guid: 6186325a0df95d54591726743e17c90e,
         type: 3}
       propertyPath: m_RootOrder
@@ -3451,6 +3620,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy Spawn Trigger (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Spawner
       objectReference: {fileID: 0}
     - target: {fileID: 3745791448223334884, guid: 6186325a0df95d54591726743e17c90e,
         type: 3}
@@ -4723,6 +4902,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy Spawn Trigger (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1635183843327997844, guid: 6186325a0df95d54591726743e17c90e,
+        type: 3}
+      propertyPath: m_TagString
+      value: Spawner
       objectReference: {fileID: 0}
     - target: {fileID: 3745791448223334884, guid: 6186325a0df95d54591726743e17c90e,
         type: 3}

@@ -7,7 +7,6 @@ public class BulletController : MonoBehaviour {
     Rigidbody rb;
     float lifeTime = 0.0f;
 
-
     /// <summary>
     /// The function adds an impulse force to the Rigidbody component of the object in the forward
     /// direction.
@@ -38,7 +37,9 @@ public class BulletController : MonoBehaviour {
     /// boundary around the object that can interact with other colliders in the scene. In this code
     /// snippet, OnTriggerEnter is a method that is called when the collider</param>
     private void OnTriggerEnter(Collider other) {
-        if (other.tag != "Bullet" && other.tag != "Spawner")
+        int noncollideableLayer = LayerMask.NameToLayer("Non-collideable");
+
+        if (other.tag != "Bullet" && other.tag != "Spawner" && other.gameObject.layer != noncollideableLayer)
             Destroy(gameObject);
     }
 }

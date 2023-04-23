@@ -56,6 +56,7 @@ public class PlayerController : MonoBehaviour {
     public AudioSource walkSound;
     public AudioSource runSound;
     public AudioSource hitSound;
+    public AudioSource shotSound;
 
 
     /// <summary>
@@ -217,6 +218,8 @@ public class PlayerController : MonoBehaviour {
                 Instantiate(bulletPrefab, barrelEnd.transform.position, barrelEnd.transform.rotation);
                 break;
         }
+        
+        shotSound.Play();
     }
 
 
