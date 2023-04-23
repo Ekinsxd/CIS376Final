@@ -29,7 +29,9 @@ public class FBulletScript : MonoBehaviour {
         if (lifeTime > maxLife) {
             Destroy(gameObject);
         }
+
         transform.position += direction * bulletSpeed * Time.deltaTime;
+
         var rotation = transform.rotation * Quaternion.Euler(new Vector3(Random.Range(5, 20), 0, 0));
         transform.rotation = rotation;
     }

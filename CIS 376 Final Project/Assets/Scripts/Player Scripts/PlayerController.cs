@@ -11,12 +11,13 @@ public class PlayerController : MonoBehaviour {
     // SHOOT SPORADICALLY (use f bullet for inspo)
     // FIX JUMPING
 
+
     #region Movement
     private const float playerHeight = 2f;
     private const float groundDrag = 4;
     private const float airMultiplier = 0.3f;
     private const float jumpCooldown = 1;
-    //private const float airMultiplier = 0.4f;
+    private const float jumpForce = 175;
 
     private float horizontalInput;
     private float verticalInput;
@@ -41,13 +42,21 @@ public class PlayerController : MonoBehaviour {
 
     #endregion Powerups/Bullets
 
-    [Header("Ground/Water Check")]
+    [Header("Ground Check")]
     public LayerMask groundLayer;
     private bool grounded;
     private bool inWater;
     private GameController gc;
     private float iFrames;
     private const KeyCode jumpKey = KeyCode.Space;
+
+
+    [Header("Player sounds")]
+    public AudioSource jumpSound;
+    public AudioSource walkSound;
+    public AudioSource runSound;
+    public AudioSource hitSound;
+
 
     /// <summary>
     /// First call upon player creation
@@ -101,8 +110,12 @@ public class PlayerController : MonoBehaviour {
         bool running = grounded && (Input.GetKey(KeyCode.RightShift) || Input.GetKey(KeyCode.LeftShift));
         if (running) {
             moveSpeed = 10;
+            runSound.Play();
+            walkSound.Stop();
         } else {
             moveSpeed = 8;
+            walkSound.Play();
+            runSound.Stop();
         }
 
         // when to jump
@@ -134,8 +147,7 @@ public class PlayerController : MonoBehaviour {
         // on ground
         if (grounded) {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f, ForceMode.Acceleration);
-        }
-        else {
+        } else {
             rb.AddForce(moveDirection.normalized * moveSpeed * 10f * airMultiplier, ForceMode.Acceleration);
         }
     }
@@ -164,8 +176,12 @@ public class PlayerController : MonoBehaviour {
             Vector3 currVel = rb.velocity;
             currVel.y = 12;
             rb.velocity = currVel;
-            // rb.AddForce(transform.up * jumpForce, ForceMode.Impulse);
         }
+
+        if (jumpSound)
+            jumpSound.Play();
+        walkSound.Stop();
+        runSound.Stop();
     }
 
 
@@ -181,9 +197,9 @@ public class PlayerController : MonoBehaviour {
 
     #region WEAPON
 
-   /// <summary>
-   /// The function ShootWeapon shoots different types of bullets based on the current powerup.
-   /// </summary>
+    /// <summary>
+    /// The function ShootWeapon shoots different types of bullets based on the current powerup.
+    /// </summary>
     private void ShootWeapon() {
         switch (currentPowerup) {
             case Powerup.S:
@@ -217,7 +233,9 @@ public class PlayerController : MonoBehaviour {
         float endAngle = startAngle + totalSpread;
 
         for (var i = 0; i < numBullets; i++) {
-            Quaternion rotation = barrelEnd.transform.rotation * Quaternion.Euler(new Vector3(Random.Range(startAngle, endAngle), Random.Range(startAngle, endAngle), 0));
+            Quaternion randomRotation = Quaternion.Euler(new Vector3(Random.Range(startAngle, endAngle), Random.Range(startAngle, endAngle), 0));
+            Quaternion rotation = barrelEnd.transform.rotation * randomRotation;
+            
             Instantiate(bulletPrefab, barrelEnd.transform.position, rotation);
         }
     }
@@ -285,6 +303,7 @@ public class PlayerController : MonoBehaviour {
             // 1 second of invincibility
             iFrames = 1f;
             Debug.Log($"PLAYER SHOT BY ENEMY");
+            hitSound.Play();
             //Runner is also an enemy 
             Destroy(other.gameObject);
 
